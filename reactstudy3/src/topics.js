@@ -27,22 +27,10 @@ class Topics extends Component {
 	contrast() {
 		const inputnum = parseInt(this.state.inputnum, 10)
 		const { num } = this.state
-		let shuzi = 0
-		if (Number.isNaN(inputnum)) {
-			shuzi = 4
-		} else if (inputnum < 1 || inputnum > 101) {
-			shuzi = 5
-		} else if (inputnum < num) {
-			shuzi = 2
-		} else if (inputnum === num) {
-			shuzi = 1
-		} else {
-			shuzi = 0
-		}
 		this.setState({
-			list: [...this.state.list, { path: this.state.inputnum, num: shuzi }],
+			list: [...this.state.list, { path: inputnum, num }],
 		})
-		this.props.history.push(`/topics/${this.state.inputnum}`, { num: shuzi })
+		this.props.history.push(`/topics/${this.state.inputnum}`, { num })
 		this.setState({ inputnum: '' })
 	}
 
@@ -51,6 +39,7 @@ class Topics extends Component {
 			inputnum: '',
 			num: Math.floor(Math.random() * 100) + 1,
 		})
+		this.props.history.push('/topics/start')
 	}
 
 	render() {
@@ -67,7 +56,7 @@ class Topics extends Component {
 					<button onClick={this.reset}>重置</button>
 				</div>
 				<Route path={'/topics/:num'} >
-					<Small />
+					<Small key={this.props.location.pathname} />
 				</Route>
 			</div >
 		)
@@ -76,6 +65,7 @@ class Topics extends Component {
 
 Topics.propTypes = {
 	history: PropTypes.object,
+	location: PropTypes.object,
 }
 
 export default withRouter(Topics)
