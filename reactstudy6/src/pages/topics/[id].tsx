@@ -6,7 +6,7 @@ export default function SmallPage(props: any) {
 	const intnum = Number(props.match.params.id)
 	const { nownum } = useModel('useResult', (model) => ({ nownum: model.nownum }))
 	let result = '开始游戏'
-	function jisuan() {
+	function setresult() {
 		if (intnum === nownum) {
 			result = '猜对了'
 		} else if (intnum > nownum) {
@@ -15,7 +15,7 @@ export default function SmallPage(props: any) {
 			result = '太小了'
 		}
 	}
-	jisuan()
+	setresult()
 	return (
 		<div>
 			<h1 className={styles.small}>{result}</h1>
