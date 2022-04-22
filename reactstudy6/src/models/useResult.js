@@ -4,17 +4,17 @@ export default function useResult() {
 	const [intnum, setint] = useState(null)
 	const [nownum, setnow] = useState(Math.floor(Math.random() * 100) + 1)
 
-	const setshuru = useCallback((newdata) => {
+	const setinput = useCallback((newdata) => {
 		setint(newdata)
 	}, [])
-	const setdangqian = useCallback((newdata) => {
+	const setnum = useCallback((newdata) => {
 		setnow(newdata)
 	}, [])
 
 	return {
 		intnum,
 		nownum,
-		setshuru,
-		setdangqian,
+		setinput,
+		setnum,
 	}
 }

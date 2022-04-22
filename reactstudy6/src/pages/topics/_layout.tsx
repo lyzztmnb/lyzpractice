@@ -9,7 +9,7 @@ export default function TopicsPage(
 	props: { history: { go: (arg0: number) => void, push:(str: string) => void }, children:{} },
 ) {
 	// 通过插件设置当前的数据
-	const { setdangqian } = useModel('useResult', (model) => ({ setdangqian: model.setdangqian }))
+	const { setnum } = useModel('useResult', (model) => ({ setnum: model.setnum }))
 	// 输入的数据
 	let num = 0
 	// 返回上一页
@@ -26,7 +26,7 @@ export default function TopicsPage(
 	}
 	// 重设随机数
 	function reset() {
-		setdangqian(Math.floor(Math.random() * 100) + 1)
+		setnum(Math.floor(Math.random() * 100) + 1)
 	}
 
 	const { Search } = Input
