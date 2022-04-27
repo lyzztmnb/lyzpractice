@@ -19,16 +19,20 @@ function Login(props: { history: string[] }) {
 	const GameScore = Parse.Object.extend('user')
 	const query = new Parse.Query(GameScore)
 
+	function onFinishFailed(errorInfo: any) {
+		console.log('Failed:', errorInfo)
+	}
+
 	function onFinish(values: { username: any; password: any }) {
 		const thisname = values.username
 		const thispass = values.password
+		// 以用户名作为唯一检索值
 		query.equalTo('playname', thisname)
-		query.equalTo('password', thispass)
 		query.find().then(
 			(results: string | any[]) => {
-				// 当账号不存在，就创建新的账号
 				if (results.length === 0) {
-					// console.log('账号不存在，即将创建账号')
+					// 当账号不存在，就创建新的账号
+					console.log('账号不存在，即将创建账号')
 					const anynum = Math.floor(Math.random() * 100) + 1
 					const gameScore = new GameScore()
 					gameScore.set('num', anynum)
@@ -44,21 +48,20 @@ function Login(props: { history: string[] }) {
 							console.log(`Failed to create new object, with error code: ${error.message}`)
 						},
 					)
-				} else {
-					// 当账号存在时，获取该账号的数据
+				} else if (results[0].attributes.password === thispass){
+					// 当账号存在时，并且密码对的上，获取该账号的数据
 					nowusernum(results[0].attributes.num)
 					nowuserid(results[0].id)
 					props.history.push('/App')
+				} else {
+					// 账号存在，但是又密码不对的话
+					console.log("密码错误，请重新输入")
 				}
 			},
 			(error: any) => {
 				console.log(error)
 			},
 		)
-	}
-
-	function onFinishFailed(errorInfo: any) {
-		console.log('Failed:', errorInfo)
 	}
 
 	return (
